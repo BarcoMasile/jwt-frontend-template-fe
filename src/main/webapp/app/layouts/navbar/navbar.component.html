@@ -1,0 +1,164 @@
+<nav data-cy="navbar" class="navbar navbar-expand-md bg-light">
+  <div class="op-logo-rt">
+    <a href="https://www.regione.toscana.it/" target="_blank"><img alt="Logo Regione Toscana" src="/content/images/rt-theme/layout_set_logo.png"></a>
+  </div>
+
+  <a
+    class="navbar-toggler d-lg-none"
+    href="javascript:void(0);"
+    data-toggle="collapse"
+    data-target="#navbarResponsive"
+    aria-controls="navbarResponsive"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    (click)="toggleNavbar()"
+  >
+    <fa-icon icon="bars"></fa-icon>
+  </a>
+  <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
+    <ul class="navbar-nav ml-auto" [ngSwitch]="isLogged">
+
+      <!-- HOME -->
+      <!--<li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+          <span>
+            <fa-icon icon="home"></fa-icon>
+            <span arpaTranslate="global.menu.home">Home</span>
+          </span>
+        </a>
+      </li>-->
+      <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
+
+      <!-- ENTITY -->
+      <!-- *ngSwitchCase="true" -->
+      <li
+        *ngIf="isAdmin"
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu" data-cy="entity">
+          <span>
+            <fa-icon icon="th-list"></fa-icon>
+            <span arpaTranslate="global.menu.entities.main">Entities</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+          <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+        </ul>
+      </li>
+
+      <!-- ADMIN MENU -->
+      <li
+        *arpaHasAnyAuthority="'ROLE_ADMIN'"
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu" data-cy="adminMenu">
+          <span>
+            <fa-icon icon="users-cog"></fa-icon>
+            <span arpaTranslate="global.menu.admin.main">Administration</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+          <li *ngIf="openAPIEnabled">
+            <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
+              <span arpaTranslate="global.menu.admin.apidocs">API</span>
+            </a>
+          </li>
+          <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+          <li *ngIf="!inProduction">
+            <a class="dropdown-item" href="./h2-console/" target="_tab" (click)="collapseNavbar()">
+              <fa-icon icon="database" [fixedWidth]="true"></fa-icon>
+              <span arpaTranslate="global.menu.admin.database">Database</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <!-- LINGUE -->
+      <li ngbDropdown class="nav-item dropdown pointer op-language" display="dynamic" *ngIf="languages && languages.length > 1">
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="languagesnavBarDropdown">
+          <span>
+            <fa-icon icon="flag"></fa-icon>
+            <span arpaTranslate="global.menu.language">Language</span>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="languagesnavBarDropdown">
+          <li *ngFor="let language of languages">
+            <a
+              class="dropdown-item"
+              [arpaActiveMenu]="language"
+              href="javascript:void(0);"
+              (click)="changeLanguage(language); collapseNavbar()"
+              >{{ language | findLanguageFromKey }}</a
+            >
+          </li>
+        </ul>
+      </li>
+
+      <li
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        display="dynamic"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+
+
+        <a class="nav-link" *ngSwitchCase="false" (click)="login()" href="javascript:void(0);" id="account-menu-login">
+          <span style="color: #0066cc">
+            <fa-icon icon="sign-in-alt"></fa-icon>
+            <span arpaTranslate="global.menu.account.login">Sign in</span>
+          </span>
+        </a>
+        <a class="nav-link" *ngSwitchCase="true" (click)="logout()" href="javascript:void(0);" id="account-menu-logout">
+          <span style="color: #0066cc">
+            <fa-icon icon="sign-out-alt"></fa-icon>
+            <span arpaTranslate="global.menu.account.logout">Sign out</span>
+          </span>
+        </a>
+
+        <!-- ACCOUNT MENU - LOGIN/LOGOUT -->
+        <!--<a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu" data-cy="accountMenu">
+          <span *ngIf="!getImageUrl()">
+            <fa-icon icon="user"></fa-icon>
+            <span arpaTranslate="global.menu.account.main">Account</span>
+          </span>
+          <span *ngIf="getImageUrl()">
+            <img [src]="getImageUrl()" class="profile-image rounded-circle" alt="Avatar" />
+          </span>
+        </a>
+
+        <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+          <li *ngSwitchCase="true">
+            <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+              <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+              <span arpaTranslate="global.menu.account.logout">Sign out</span>
+            </a>
+          </li>
+          <li *ngSwitchCase="false">
+            <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+              <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+              <span arpaTranslate="global.menu.account.login">Sign in</span>
+            </a>
+          </li>
+        </ul>-->
+
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="sub-header">
+  <div class="container sup-container">
+    <div class="sht">
+      <img src="/content/images/rt-theme/logo-arpa-header.png" alt="Logo Arpa Toscana" class="mx-auto img-fluid"
+           style="width: 100px; background-color: unset;"><h1 style="display: inline;">Infrastruttura per l'autenticazione, autorizzazione e accesso ai servizi</h1>
+    </div>
+  </div>
+</div>

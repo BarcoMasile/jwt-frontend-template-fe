@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html class="no-js" lang="it" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>ArpaCitizenHub</title>
+    <meta name="description" content="Description for ArpaCitizenHub" />
+    <meta name="google" content="notranslate" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <base href="/" />
+    <link rel="icon" href="content/images/layout_set_logo.jpg" />
+    <link rel="manifest" href="manifest.webapp" />
+    <link rel="stylesheet" href="content/css/loading.css" />
+    <link rel="stylesheet" type="text/css" href="content/css/my_loader.css">
+    <link rel="stylesheet" type="text/css" href="content/css/rt-arpa-style.css" >
+
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- jhipster-needle-add-resources-to-root - JHipster will add new resources here -->
+  </head>
+
+  <body>
+    <!--[if lt IE 9]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+    <arpa-main>
+      <div class="container align-content-center" style="margin-top: 4%">
+        <div id="app-title" class="text-center m-auto">
+          <img class="" src="content/images/rt-splash-screen.jpg" alt="Logo Regione Toscana"
+               style="border-radius: 10px; background-color: white; max-width: 20%">
+          <div class="loader" id="loader" style="background-color: white; top: 60%"></div>
+        </div>
+      </div>
+      <div class="app-loading">
+        <div id="jhipster-error" style="display: none">
+          <h1>An error has occurred :-(</h1>
+        </div>
+      </div>
+    </arpa-main>
+    <noscript>
+      <h1>You must enable JavaScript to view this page.</h1>
+    </noscript>
+    <script type="text/javascript">
+      // show an error message if the app loading takes more than 4 sec
+      window.onload = function () {
+        setTimeout(showError, 4000);
+      };
+      function showError() {
+        var errorElm = document.getElementById('jhipster-error');
+        if (errorElm && errorElm.style) {
+          errorElm.style.display = 'block';
+        }
+      }
+    </script>
+
+    <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
+    <script>
+      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+      e.src='//www.google-analytics.com/analytics.js';
+      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+      ga('create','UA-XXXXX-X');ga('send','pageview');
+    </script>-->
+    <!--<script id="__bs_script__">//<![CDATA[
+    document.write("<script async src='http://HOST:9000/browser-sync/browser-sync-client.js?v=2.26.14'><\/script>".replace("HOST", location.hostname));
+    //]]></script>-->
+  </body>
+</html>

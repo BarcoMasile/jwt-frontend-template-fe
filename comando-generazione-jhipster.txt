@@ -1,0 +1,1 @@
+jhipster --skip-cache --skip-server --auth=oauth2 --jhi-prefix=arpa

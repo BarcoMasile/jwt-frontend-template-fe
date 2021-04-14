@@ -1,0 +1,22 @@
+<div class="row align-items-center justify-content-md-center">
+
+  <div class="col-md-9">
+    <div [ngSwitch]="isAuthenticated()">
+      <div class="alert alert-success" *ngSwitchCase="true">
+        <span id="home-logged-message" *ngIf="account">
+          You are logged in as user "{{ account.firstName }}&nbsp;{{account.lastName}}".
+        </span>
+      </div>
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        <span arpaTranslate="global.messages.info.authenticated.prefix">If you want to </span>
+        <a class="alert-link" (click)="login()" arpaTranslate="global.messages.info.authenticated.link">sign in</a>
+      </div>
+
+      <div class="alert alert-warning">
+        <a class="alert-link" routerLink="/faq">FAQ</a>
+      </div>
+    </div>
+
+  </div>
+</div>
