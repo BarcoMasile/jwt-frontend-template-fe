@@ -33,10 +33,10 @@ Nella cartella ```shared/util``` e' possibile trovare diverse funzioni di utilit
 ## Contenuto
 __Dopo aver configurato un client-id__ l'applicazione si presenta cosi:
 - prima della login tramite ARPA
-![prima della login](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/img/template-1.PNG)
+![prima della login](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/src/master/img/template-1.PNG)
 
 - dopo la login tramite ARPA
-  ![dopo la login](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/img/template-2.PNG)
+  ![dopo la login](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/src/master/img/template-2.PNG)
 
 ## Sviluppo
 Per la fase di sviluppo e' possibile lanciare il server in locale con hot reload alla modifica dei file con il comando ```npm run start```.
