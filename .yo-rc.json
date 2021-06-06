@@ -6,7 +6,7 @@
     "blueprints": [],
     "otherModules": [],
     "applicationType": "monolith",
-    "baseName": "ArpaCitizenHub",
+    "baseName": "#NOME-APP#",
     "jhipsterVersion": "7.0.1",
     "skipClient": false,
     "skipUserManagement": false,

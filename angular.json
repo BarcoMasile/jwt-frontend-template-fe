@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "arpa-citizen-hub": {
+    "#NOME_APP#": {
       "root": "",
       "sourceRoot": "src/main/webapp",
       "projectType": "application",
@@ -128,17 +128,17 @@
         "serve": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "arpa-citizen-hub:build"
+            "browserTarget": "#NOME_APP#:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "arpa-citizen-hub:build:production"
+              "browserTarget": "#NOME_APP#:build:production"
             },
             "staging": {
-              "browserTarget": "arpa-citizen-hub:build:staging"
+              "browserTarget": "#NOME_APP#:build:staging"
             },
             "produzione": {
-              "browserTarget": "arpa-citizen-hub:build:produzione"
+              "browserTarget": "#NOME_APP#:build:produzione"
             }
           }
         },
@@ -160,7 +160,7 @@
       "prefix": "arpa"
     }
   },
-  "defaultProject": "arpa-citizen-hub",
+  "defaultProject": "#NOME_APP#",
   "cli": {
     "packageManager": "npm"
   }

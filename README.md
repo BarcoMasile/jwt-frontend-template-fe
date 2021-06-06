@@ -8,6 +8,13 @@ jhipster --skip-cache --skip-server --auth=oauth2 --jhi-prefix=arpa
 
 Dopo di che' e' stata configurata la security per permettere l'autenticazione da frontend secondo l'OpenID Connect.
 
+## Generazione Applicazione
+In seguito verra' scriptata la generazione dell'applicazione, al momento e' necessario sostituire (facilmente con un IDE) tutte le occorrenze di seguito indicate con il nome che si vuole dare all'app.
+Esempio: considerando un'applicazione chiamata "Arpa Citizen Hub", si dovranno sostituire le occorrenze:
+- __\#NOME_APP\#__ con __arpa-citizen-hub__
+- __\#NOME-APP\#__ con __ArpaCitizenHub__
+- __\#APP-KEY\#__ con __arpaCitizenHubApp__
+
 Nella cartella [environment](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/src/master/src/main/webapp/app/environment) e' possibile trovare i file di configurazione esternalizzata.
 Al momento sono previsti tre configurazioni:
 - [environment.ts](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/src/master/src/main/webapp/app/environment/environment.ts): configurazione di default

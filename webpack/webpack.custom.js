@@ -23,7 +23,7 @@ module.exports = (config, options, targetOptions) => {
       }),
       new FriendlyErrorsWebpackPlugin(),
       new WebpackNotifierPlugin({
-        title: 'Arpa Citizen Hub',
+        title: '#NOME-APP#',
         contentImage: path.join(__dirname, 'src', 'main', 'webapp', 'content', 'images', 'rt-theme', 'logo-jhipster.png'),
       })
     );

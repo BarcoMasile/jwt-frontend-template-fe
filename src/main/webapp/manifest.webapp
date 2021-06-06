@@ -1,6 +1,6 @@
 {
-  "name": "ArpaCitizenHub",
-  "short_name": "ArpaCitizenHub",
+  "name": "#NOME-APP#",
+  "short_name": "#NOME-APP#",
   "icons": [
     {
       "src": "./content/images/layout_set_logo.jpg",
