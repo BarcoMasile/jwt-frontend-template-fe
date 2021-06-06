@@ -1,21 +1,25 @@
-import {Injectable} from '@angular/core';
+import {Injectable, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {TranslateService} from '@ngx-translate/core';
 import {SessionStorageService} from 'ngx-webstorage';
 import {EMPTY, Observable, of, ReplaySubject} from 'rxjs';
-import {catchError, shareReplay, tap} from 'rxjs/operators';
+import {catchError, filter, shareReplay, tap} from 'rxjs/operators';
 
 import {StateStorageService} from 'app/core/auth/state-storage.service';
 import {Account} from 'app/core/auth/account.model';
-import {OAuthService} from 'angular-oauth2-oidc';
-import {ADMIN} from 'app/shared/constants/auth.constants';
+import {OAuthInfoEvent, OAuthService} from 'angular-oauth2-oidc';
+import {ADMIN, USERINFO_URL} from 'app/shared/constants/auth.constants';
+import {JwtUtils} from 'app/shared/util/jwt-utils';
+import {SubSink} from 'subsink';
+import {UserInfo} from 'angular-oauth2-oidc/types';
 
 @Injectable({ providedIn: 'root' })
-export class AccountService {
+export class AccountService implements OnDestroy{
   private userIdentity: Account | null = null;
   private authenticationState = new ReplaySubject<Account | null>(1);
   private accountCache$?: Observable<Account | null>;
+  private sink = new SubSink();
 
   constructor(
     private translateService: TranslateService,
@@ -24,7 +28,24 @@ export class AccountService {
     private stateStorageService: StateStorageService,
     private router: Router,
     private oauthService: OAuthService
-  ) {}
+  ) {
+    this.sink.sink = this.oauthService.events.pipe(
+      filter(event => event.type.includes('sess'))
+    ).subscribe((event: any) => {
+      if (event instanceof OAuthInfoEvent) {
+        console.log("info-event: ", event.type, event.info);
+      } else {
+        console.log("event: ", event.type, event['info']);
+      }
+    });
+
+    this.sink.sink = this.authenticationState
+      .pipe(filter(account => account === null))
+      .subscribe(account => {
+        console.debug("authenticationState === null, logging out...");
+        this.oauthService.logOut()
+      });
+  }
 
   authenticate(identity: Account | null): void {
     this.userIdentity = identity;
@@ -53,8 +74,6 @@ export class AccountService {
         tap((account: Account | null) => {
           this.authenticate(account);
 
-          // After retrieve the account info, the language will be changed to
-          // the user's preferred language configured in the account setting
           if (account?.langKey) {
             const langKey = this.sessionStorage.retrieve('locale') ?? account.langKey;
             this.translateService.use(langKey);
@@ -78,18 +97,18 @@ export class AccountService {
     return this.authenticationState.asObservable();
   }
 
-  getImageUrl(): string {
-    return this.userIdentity?.imageUrl ?? '';
+  loadUserInfo(): Observable<UserInfo> {
+    return this.http.get<UserInfo>(USERINFO_URL)
+      .pipe(catchError(() => EMPTY));
   }
 
   private fetch(): Observable<Account> {
     const claims = this.oauthService.getIdentityClaims();
-    if (claims == null) {
-      console.debug("fetch(): EMPTY")
+    if (!this.oauthService.hasValidAccessToken() || claims == null) {
       return EMPTY;
     }
-    console.debug("fetch(): Account")
-    return of(Account.fromClaims(claims));
+
+    return of(Account.fromClaims(JwtUtils.decodeJwt(this.oauthService.getAccessToken())).enhanceUserInfo(this.loadUserInfo()));
   }
 
   private navigateToStoredUrl(): void {
@@ -100,5 +119,9 @@ export class AccountService {
       this.stateStorageService.clearUrl();
       this.router.navigateByUrl(previousUrl);
     }
+  }
+
+  ngOnDestroy() {
+    this.sink.unsubscribe();
   }
 }

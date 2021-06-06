@@ -14,6 +14,8 @@ import { translationNotFoundMessage } from 'app/config/translation.config';
 export class TranslateDirective implements OnChanges, OnInit, OnDestroy {
   @Input() arpaTranslate!: string;
   @Input() translateValues?: { [key: string]: unknown };
+  @Input() anchor?: boolean = false;
+  @Input() samePage: boolean = false;
 
   private readonly directiveDestroyed = new Subject<never>();
 
@@ -40,7 +42,14 @@ export class TranslateDirective implements OnChanges, OnInit, OnDestroy {
       .pipe(takeUntil(this.directiveDestroyed))
       .subscribe(
         value => {
-          this.el.nativeElement.innerHTML = value;
+          if (this.anchor) {
+            this.el.nativeElement.setAttribute('href', value);
+            if(!this.samePage) {
+              this.el.nativeElement.setAttribute('target', '_blank');
+            }
+          } else {
+            this.el.nativeElement.innerHTML = value;
+          }
         },
         () => `${translationNotFoundMessage}[${this.arpaTranslate}]`
       );

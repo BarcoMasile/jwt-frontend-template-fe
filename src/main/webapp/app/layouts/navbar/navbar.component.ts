@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit{
   }
 
   getImageUrl(): string {
-    return this.accountService.getImageUrl() ?? '';
+    return '';
   }
 
   ngOnInit(): void {

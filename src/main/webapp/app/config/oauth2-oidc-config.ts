@@ -1,15 +1,24 @@
 import {AuthConfig, OAuthModuleConfig} from 'angular-oauth2-oidc';
 import {ENV} from 'app/environment/environment';
-import {ADMIN, ISSUER, LOGIN_URL, LOGOUT_URL, OAUTH2_LOGIN_PATH, TOKEN_URL} from 'app/shared/constants/auth.constants';
+import {
+  CLIENT_ID,
+  ISSUER,
+  LOGIN_URL,
+  LOGOUT_URL,
+  POST_LOGOUT_REDIRECT_URI,
+  REDIRECT_URI,
+  SCOPES,
+  TOKEN_URL
+} from 'app/shared/constants/auth.constants';
 
 export const authCodeFlowConfig: AuthConfig = {
   issuer: ISSUER,
-  redirectUri: `${window.location.origin}/${OAUTH2_LOGIN_PATH}`,
-  postLogoutRedirectUri: window.location.origin,
-  clientId: ENV.clientId,
+  redirectUri: REDIRECT_URI,
+  postLogoutRedirectUri: POST_LOGOUT_REDIRECT_URI,
+  clientId: CLIENT_ID,
   responseType: 'code',
-  scope: `openid profile ${ADMIN}`,
-  showDebugInformation: true,
+  scope: SCOPES,
+  showDebugInformation: false,
   timeoutFactor: 0.88,
 
   loginUrl: LOGIN_URL,
@@ -20,7 +29,7 @@ export const authCodeFlowConfig: AuthConfig = {
 
 export const authModuleConfig: OAuthModuleConfig = {
   resourceServer: {
-    allowedUrls: ['*'],
+    allowedUrls: ENV.sendTokenToURLs,
     sendAccessToken: true
   }
 }

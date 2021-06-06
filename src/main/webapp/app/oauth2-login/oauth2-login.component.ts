@@ -5,6 +5,7 @@ import {interval} from 'rxjs';
 import {OAuthService} from 'angular-oauth2-oidc';
 import {filter, map, switchMap, take} from 'rxjs/operators';
 import {SubSink} from 'subsink';
+import {POST_LOGIN_REDIRECT_URI} from 'app/shared/constants/auth.constants';
 
 const INTERVAL_MS = 200;
 const INTERVAL_TIMEOUT_CYCLES = 10;
@@ -13,7 +14,7 @@ const INTERVAL_TIMEOUT_CYCLES = 10;
   selector: 'arpa-login',
   template: `
     <div class="container-fluid">
-      <div class="row justify-content-md-center">
+      <div class="row justify-content-center">
         <div class="col-auto">
           <p-progressSpinner></p-progressSpinner>
         </div>
@@ -40,7 +41,7 @@ export class Oauth2LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.sink.sink = this.accountService.getAuthenticationState().subscribe(account => {
-      this.router.navigateByUrl('/')
+      this.router.navigateByUrl(POST_LOGIN_REDIRECT_URI)
     });
 
     this.sink.sink = this.tokenAvailable$.subscribe(() => {
@@ -51,5 +52,4 @@ export class Oauth2LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.sink.unsubscribe();
   }
-
 }

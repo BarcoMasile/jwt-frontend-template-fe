@@ -16,6 +16,28 @@ Al momento sono previsti tre configurazioni:
 
 Nel codice dell'applicazione e' sufficiente fare riferimento all'oggettto ```ENV``` della configurazione di default, che poi a compilazione verra' sostituita dalla conf corrispondente all'ambiente selezionato da profilo.
 
+## PrimeNG Libraries
+Nel file ```src/main/webapp/app/shared/primeng-imports.ts``` e' possibile effettuare gli import dei moduli del framework [PrimeNG](https://primefaces.org/primeng/showcase/#/setup) gia' importato e configurato per essere utilizzato.
+
+## Autenticazione OIDC / OAuth2 tramite ARPA
+L'applicazione e' gia' predisposta per permettere facilmente le operazioni di
+- Login tramite ARPA OAuth2 (OpenID Connect)
+- Refresh automatico del token in prossimita' dello scadere sua della validita'
+- Gestione della redirection in seguito a login e logout
+- Logout corretto con terminazione della sessione in corso
+- Injection del token ARPA per effettuare chiamate autorizzate tramite ```HttpClient``` angular verso i backend specificati nel file ```environment.ts``` (e derivati)
+
+## Utilities
+Nella cartella ```shared/util``` e' possibile trovare diverse funzioni di utility per semplificare lo sviluppo di un'applicazione, gestire timer e notifiche a schermo, ecc.
+
+## Contenuto
+__Dopo aver configurato un client-id__ l'applicazione si presenta cosi:
+- prima della login tramite ARPA
+![prima della login](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/img/template-1.PNG)
+
+- dopo la login tramite ARPA
+  ![dopo la login](https://dev.tai.it/gogs/mbasile/jwt-frontend-template/img/template-2.PNG)
+
 ## Sviluppo
 Per la fase di sviluppo e' possibile lanciare il server in locale con hot reload alla modifica dei file con il comando ```npm run start```.
 
