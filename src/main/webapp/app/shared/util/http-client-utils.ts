@@ -16,9 +16,16 @@ export class HttpClientUtils {
     );
   }
 
-  static safeObs<T>(obs: Observable<HttpResponse<T>>, defaultFailureValue: T): Observable<SafeResponse<T>> {
+  static safeObsHttp<T>(obs: Observable<HttpResponse<T>>, defaultFailureValue: T): Observable<SafeResponse<T>> {
     return obs.pipe(
       switchMap(res => of({success: [res.body!]})),
+      catchError(() => of({failure: [defaultFailureValue]}))
+    );
+  }
+
+  static safeObs<T>(obs: Observable<T>, defaultFailureValue: T): Observable<SafeResponse<T>> {
+    return obs.pipe(
+      switchMap(res => of({success: [res]})),
       catchError(() => of({failure: [defaultFailureValue]}))
     );
   }
